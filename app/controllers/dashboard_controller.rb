@@ -2,7 +2,8 @@ class DashboardController < ApplicationController
   before_action :set_user
 
   def index
-    cheets = Cheet.where('user_id in (select subscribed_to_id from subscriptions where subscriber_id = ?)', @user.id)
+    cheets = Cheet.joins('inner join subscriptions on subscriptions.user_id = cheets.user_id ')
+	              .where(' subscriptions.subscribed_to_id = ? ',@user.id)
                   .order(created_at: :desc)
                   .limit(50)
 
