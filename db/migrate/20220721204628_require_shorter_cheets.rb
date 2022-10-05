@@ -6,7 +6,7 @@ class RequireShorterCheets < ActiveRecord::Migration[6.1]
 	    new_msg = p.message; 
 	    p.update('message_short = ',new_msg[1,97]);
 	  
-	  cheets2 = Cheet.where('char_length(message) < 101')
+	  cheets2 = Cheet.where('char_length(message) > 100')
         cheets2.each do |q|
 	    new_msg2 = q.message; 
 	    p.update('message_short = ',new_msg2);		
