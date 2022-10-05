@@ -9,7 +9,7 @@ class RequireShorterCheets < ActiveRecord::Migration[6.1]
 	  cheets2 = Cheet.where('char_length(message) < 101')
         cheets2.each do |q|
 	    new_msg2 = q.message; 
-	    p.update('message_short = ',new_msg2);		
+	    q.update('message_short = ',new_msg2);		
 	  remove :cheets :message
 	  rename :cheets :message_short, :message 
   end
