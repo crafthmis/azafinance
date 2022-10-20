@@ -6,16 +6,10 @@ default: &default
   port: 5432
   username: postgres
   password: password
-
+  schema_search_path: 'azafinance'
 development:
   <<: *default
   database: chitter_development
-
-production:
-  <<: *default
-  database: chitter_production
-  username: chitter
-  password: <%= ENV['CHITTER_DATABASE_PASSWORD'] %>
 
 test:
   <<: *default

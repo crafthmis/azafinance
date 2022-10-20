@@ -1,0 +1,63 @@
+-- Table: azafinance.conversion
+
+-- DROP TABLE IF EXISTS azafinance.conversion;
+
+CREATE TABLE IF NOT EXISTS azafinance.conversion
+(
+    tid bigint NOT NULL DEFAULT nextval('azafinance.tbl_conversion_tid_seq'::regclass),
+    currency_from bigint NOT NULL,
+    currency_to bigint NOT NULL,
+    conversion_rate money NOT NULL,
+    trx_date timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT tbl_conversion_pkey PRIMARY KEY (tid)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS azafinance.conversion
+    OWNER to postgres;
+----------------------------------------------------------------------------
+-- Table: azafinance.currencies
+
+-- DROP TABLE IF EXISTS azafinance.currencies;
+
+CREATE TABLE IF NOT EXISTS azafinance.currencies
+(
+    tid bigint NOT NULL DEFAULT nextval('azafinance.tbl_currency_tid_seq'::regclass),
+    code character varying COLLATE pg_catalog."default" NOT NULL,
+    name character varying COLLATE pg_catalog."default" NOT NULL,
+    trx_date timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT tbl_currency_pkey PRIMARY KEY (tid)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS azafinance.currencies
+    OWNER to postgres;
+-----------------------------------------------------------------------------
+-- Table: azafinance.transactions
+
+-- DROP TABLE IF EXISTS azafinance.transactions;
+
+CREATE TABLE IF NOT EXISTS azafinance.transactions
+(
+    id bigint NOT NULL DEFAULT nextval('azafinance.tbl_transaction_tid_seq'::regclass),
+    currency_from bigint NOT NULL,
+    currency_to bigint NOT NULL,
+    initial_amount money NOT NULL,
+    converted_amount money NOT NULL,
+    user_id bigint NOT NULL,
+    trx_date timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT tbl_transaction_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS azafinance.transactions
+    OWNER to postgres;

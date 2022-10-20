@@ -1,4 +1,3 @@
 class User < ApplicationRecord
-  has_many :cheets
-  has_many :subscriptions, foreign_key: :subscriber_id, inverse_of: :subscriber
+  has_many :transactions, foreign_key: :user_id, inverse_of: :user
 end
