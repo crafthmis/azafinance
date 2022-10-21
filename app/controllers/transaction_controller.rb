@@ -17,13 +17,20 @@ class TransactionController < ApplicationController
   end
   
   def create
-	  @trx = Transaction.new(transaction_params)  
+      
+	  
 	  @curr_from = transaction_params[:currency_from]
+	  intFrom = Conversion.find(@curr_from)
+	  if intFrom.nil then
+	    render json "not found"
+	  end
 	  @curr_to = transaction_params[:currency_to]
 	  @rate = Conversion
 	            .select('conversion_rate')
 				.where(currency_from: @curr_from,currency_to: @curr_to)
-      @trx[:initial_amount] = @amount 
+      transaction_params[:converted_amount] = "2009393"
+	  puts @rate[0] 
+	  @trx = Transaction.new(transaction_params)  
 	  @trx.save
 		render json: @trx
   end
@@ -32,6 +39,10 @@ class TransactionController < ApplicationController
   private
   def transaction_params
     params.require(:transaction).permit(:currency_from,:currency_to,:converted_amount,:initial_amount,:user_id)
+  end
+  
+  def converted_amount
+    self.converted_amount * 100
   end
   
 end
